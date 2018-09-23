@@ -41,7 +41,7 @@ def deleteOtherWatchersFromIssues(Collection<MutableIssue> issues) {
     def worklogManager = ComponentAccessor.worklogManager
 
     issues.each { issue ->
-        issueManager.getWatchersFor(issue).removeAll {
+        issueManager.getWatchersFor(issue).each {
             watcher ->
                 if (watcher != currentUser) {
                     watcherManager.stopWatching(watcher, issue)
@@ -51,10 +51,6 @@ def deleteOtherWatchersFromIssues(Collection<MutableIssue> issues) {
 
         }
     }
-}
-
-def isAnotherUser(ApplicationUser watcher, ApplicationUser currentUser) {
-    watcher != currentUser
 }
 
 def createWorkLog(MutableIssue issue, int hours) {
